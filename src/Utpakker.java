@@ -39,7 +39,9 @@ public class Utpakker {
             ArrayList<Node> tre =  innpakker.huffman(noder);
             tre.sort(Node::compareTo);
             for(int i = 0; i < tre.size(); i++){
-                System.out.println("tegn:" + tre.get(i).tegn+ ", verdi: " + tre.get(i).verdi + ", kode: " + tre.get(i).kode );
+                if(tre.get(i).kode != null) {
+                    System.out.println("tegn:" + tre.get(i).tegn + ", verdi: " + tre.get(i).verdi + ", kode: " + tre.get(i).kode);
+                }
             }
             return tre;
 
