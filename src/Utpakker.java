@@ -47,6 +47,8 @@ public class Utpakker {
         byte[] data;
         int index = 0;
         int mengde;
+        String[] unicode;
+        final int BITSPRBYTE = 8;
 
         try (
                 BufferedReader br = new BufferedReader(new FileReader(filinn));
@@ -60,6 +62,16 @@ public class Utpakker {
             data = new byte[mengde];
 
             innfil.readFully(data, index, mengde);
+
+            unicode = new String[data.length * BITSPRBYTE];
+            int bitkode = 0;
+            String bitstreng = "";
+            for(int i = 0; i < data.length; i++){
+                bitkode = (int) data[i];
+                bitstreng += bitkode;
+            }
+            System.out.println(bitstreng);
+            unicode = bitstreng.split("");
 
 
 
