@@ -82,15 +82,26 @@ public class Utpakker {
     }
 
     //Denne metoden tar bit for bit fra bitTabellen og går igjennom treet
-    public static String lesAvTre(ArrayList<Node> tre, String[] bitTabell){
-        String utText = "";
+    public ArrayList<Character> lesAvTre(ArrayList<Node> tre, String[] bitTabell){
+        ArrayList<Character> utText = new ArrayList<Character>();
 
+        //Finner root noden
+        Node root = tre.get(0);
+        Node neste = root; //Setter startnode som rootnoden altså vi starter på toppen av treet
+
+        //Går igjennom treet
         for(int i = 0; i < bitTabell.length; i++){
-            if(bitTabell[i].equals("0")){
-
+            if(neste.venstre == null || neste.høyre == null){ //Hvis noden er en løvnode
+                if(neste.tegn >= 0){
+                    utText.add((char) neste.tegn);
+                    neste = root;
+                }
             }
-            else{
-
+            else if(bitTabell[i].equals("0")){
+                neste = neste.venstre;
+            }
+            else if(bitTabell[i].equals("1")){
+                neste = neste.høyre;
             }
         }
         return utText;
