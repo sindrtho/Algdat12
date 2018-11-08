@@ -34,12 +34,12 @@ public class Utpakker {
                     noder.add(node);
                 }
             }
-
+            br.close();
             return innpakker.huffman(noder);
 
-            br.close();
         }catch (IOException e){
             e.printStackTrace();
+            return null;
         }
 
     }
@@ -81,8 +81,12 @@ public class Utpakker {
         return false;
     }
 
-    public static String lesAvTre(bitTabell){
+    //Denne metoden tar bit for bit fra bitTabellen og går igjennom treet
+    public static String lesAvTre(ArrayList<Node> tre, String[] bitTabell){
 
+        for(){
+
+        }
     }
 }
 
