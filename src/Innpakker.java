@@ -74,6 +74,7 @@ public class Innpakker {
                 for(int j = 0; j < tegn.length; j++){
                     if(text.charAt(i) == tegn[j]){
                         kode = koder[j];
+                        break;
                     }
                 }
                 //System.out.println("booleanKoder:" + kode);
@@ -87,8 +88,8 @@ public class Innpakker {
                 }
             }
 
-            BitSet set = new BitSet(bits.length);
-            for (int i = 0; i < bits.length; i++) {
+            BitSet set = new BitSet();
+            for (int i = 0; i < bitIndex; i++) {
                 if (bits[i]) {
                     set.set(i);
                 }
@@ -99,35 +100,13 @@ public class Innpakker {
 
             byte[] myBytes = set.toByteArray();
             for(byte b: myBytes){
-                String res = "Byte:";
-                res += b < 0 ? " " + Integer.toString((b*-1+127), 2) : " " + Integer.toString(b, 2);
+                String res = "Byte: ";
+                res += b < 0 ? new StringBuffer("" + Integer.toString((b+256), 2)).reverse().toString() : new StringBuffer("" + Integer.toString(b, 2)).reverse().toString();
                 System.out.println(res);
             }
 
-
-            //parse string til long
-            long[] longKoder = new long[koder.length];
-            for(int i = 0; i < koder.length; i++){
-                longKoder[i] = Long.parseLong(koder[i]);
-            }
-            long[] rekkefølge = new long[text.length()];
-            for(int i = 0; i < text.length(); i++){
-                long kode = 0;
-                for(int j = 0; j < longKoder.length; j++){
-                    if(text.charAt(i) == tegn[j]){
-                        kode = longKoder[j];
-                    }
-                }
-                rekkefølge[i] = kode;
-                //System.out.println("longkoder:" + kode);
-            }
-
             //Skriv ut koder
-            byte[] utData = new byte[rekkefølge.length];
-            for(int i = 0; i < rekkefølge.length; i++){
-                utData[i] = (byte) rekkefølge[i];
-            }
-
+            byte[] utData = myBytes;
             index = 0;
             komprimert.write(utData, index, utData.length);
             return true;
