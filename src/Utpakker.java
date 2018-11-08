@@ -92,7 +92,7 @@ public class Utpakker {
         ArrayList<Character> utText = new ArrayList<Character>();
 
         //Finner root noden
-        Node root = tre.get(0);
+        Node root = tre.get(tre.size()-1); //litt festlig, compareTo metoden vår setter treet i feil rekkefølge, dermed er rota siste element i lista
         Node neste = root; //Setter startnode som rootnoden altså vi starter på toppen av treet
 
         //Går igjennom treet
@@ -101,6 +101,8 @@ public class Utpakker {
                 if(neste.tegn >= 0){
                     utText.add((char) neste.tegn);
                     neste = root;
+                    char a = (char) neste.tegn;
+                    System.out.println(a);
                 }
             }
             else if(bitTabell[i].equals("0")){
