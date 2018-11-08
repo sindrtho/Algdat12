@@ -3,6 +3,7 @@ public class LesFrekvensTest {
 
 
     public static void main(String[] args) {
-        LesFrekvensTest
+        LesFrekvensTest lesFrekvensTest = new LesFrekvensTest();
+        lesFrekvensTest.utpakker.lesFrekvenstabell("filer/opg12.txt");
     }
 }
