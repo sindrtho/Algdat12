@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Utpakker {
+    ArrayList<Node> tre = new ArrayList<Node>();
 
     public static void main(String[] args) {
         Utpakker ut = new Utpakker();
@@ -17,18 +18,25 @@ public class Utpakker {
     }
 
     public void lesFrekvenstabell(String filnavnFrekvensTabell){
-        ArrayList<Innpakker.Node> noder = new ArrayList<Innpakker.Node>();
+        ArrayList<Node> noder = new ArrayList<Node>();
+        Innpakker innpakker = new Innpakker();
         try {
 
 
             BufferedReader br = new BufferedReader(new FileReader(filnavnFrekvensTabell));
             StringTokenizer st = new StringTokenizer(br.readLine());
-            int bokstav = Integer.parseInt(st.nextToken().toString());
-            int frekvens = Integer.parseInt(st.nextToken().toString());
-            if (frekvens > 0) {
-
-
+            while (st.hasMoreTokens()) {
+                int bokstav = Integer.parseInt(st.nextToken());
+                int frekvens = Integer.parseInt(st.nextToken());
+                if (frekvens > 0) {
+                    Node node = new Node(bokstav);
+                    node.verdi = frekvens;
+                    noder.add(node);
+                }
             }
+            tre = innpakker.huffman(noder);
+
+            br.close();
         }catch (IOException e){
             e.printStackTrace();
         }
