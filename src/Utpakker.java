@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Utpakker {
-    ArrayList<Node> tre = new ArrayList<Node>();
 
     public static void main(String[] args) {
         Utpakker ut = new Utpakker();
@@ -17,7 +16,7 @@ public class Utpakker {
     public Utpakker() {
     }
 
-    public void lesFrekvenstabell(String filnavnFrekvensTabell){
+    public ArrayList<Node> lesFrekvenstabell(String filnavnFrekvensTabell){
         ArrayList<Node> noder = new ArrayList<Node>();
         Innpakker innpakker = new Innpakker();
         try {
@@ -35,12 +34,12 @@ public class Utpakker {
                     noder.add(node);
                 }
             }
-
-            tre = innpakker.huffman(noder);
-
             br.close();
+            return innpakker.huffman(noder);
+
         }catch (IOException e){
             e.printStackTrace();
+            return null;
         }
 
     }
@@ -80,6 +79,21 @@ public class Utpakker {
             e.printStackTrace();
         }
         return false;
+    }
+
+    //Denne metoden tar bit for bit fra bitTabellen og går igjennom treet
+    public static String lesAvTre(ArrayList<Node> tre, String[] bitTabell){
+        String utText = "";
+
+        for(int i = 0; i < bitTabell.length; i++){
+            if(bitTabell[i].equals("0")){
+
+            }
+            else{
+
+            }
+        }
+        return utText;
     }
 }
 
