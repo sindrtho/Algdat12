@@ -11,7 +11,7 @@ public class Utpakker {
     public static void main(String[] args) {
         Utpakker ut = new Utpakker();
         //ut.utpakk("src/komprimert", "src/dekomprimert");
-        System.out.println("Hallo");
+
     }
 
     public Utpakker() {
@@ -45,7 +45,7 @@ public class Utpakker {
 
     }
 
-    public static boolean utpakk(String filinn, String filut) {
+    public static boolean pakkut(String filinn, String filut) {
         byte[] data;
         int index = 0;
         int mengde;
@@ -69,8 +69,7 @@ public class Utpakker {
             int bitkode = 0;
             String bitstreng = "";
             for(int i = 0; i < data.length; i++){
-                bitkode = (int) data[i];
-                bitstreng += bitkode;
+                bitstreng += Integer.toString(data[i],2);
             }
             System.out.println(bitstreng);
             unicode = bitstreng.split("");
