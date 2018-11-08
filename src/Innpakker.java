@@ -1,5 +1,3 @@
-package AlgDat12;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
