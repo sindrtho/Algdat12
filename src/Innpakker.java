@@ -9,7 +9,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("Algoritmer og Datastrukturer/Øving12/testfile", "Algoritmer og Datastrukturer/Øving12/utfil");
+        inn.innpakk("src/testfile", "src/utfil");
     }
 
     public Innpakker(){ }
