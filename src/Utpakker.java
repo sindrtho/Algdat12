@@ -24,16 +24,18 @@ public class Utpakker {
 
 
             BufferedReader br = new BufferedReader(new FileReader(filnavnFrekvensTabell));
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            while (st.hasMoreTokens()) {
-                int bokstav = Integer.parseInt(st.nextToken());
-                int frekvens = Integer.parseInt(st.nextToken());
-                if (frekvens > 0) {
-                    Node node = new Node(bokstav);
-                    node.verdi = frekvens;
+            String st = (br.readLine());
+            String[] tabellLest = st.split(",");
+
+            for(int i = 0; i < tabellLest.length; i++){
+                int verdi = Integer.parseInt(tabellLest[i]);
+                if(verdi > 0){
+                    Node node = new Node(i);
+                    node.verdi = verdi;
                     noder.add(node);
                 }
             }
+
             tre = innpakker.huffman(noder);
 
             br.close();
