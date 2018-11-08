@@ -9,12 +9,12 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/testfile", "src/komprimert.txt");
+        inn.innpakk("src/testfile", "src/komprimert.txt", "src/frekvens");
     }
 
     public Innpakker(){ }
 
-    public boolean innpakk(String filinn, String filut){
+    public boolean innpakk(String filinn, String filut, String filfrekvens){
         byte[] data;
         int index = 0;
         int mengde;
@@ -24,6 +24,7 @@ public class Innpakker {
             DataInputStream innfil = new DataInputStream(new BufferedInputStream(new FileInputStream(filinn)));
             DataOutputStream komprimert = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filut)));
         ){
+            //Leser hele filen
             String text = scanner.useDelimiter("\\A").next();
             mengde = text.length();
             data = new byte[mengde];
@@ -31,30 +32,47 @@ public class Innpakker {
             innfil.readFully(data, index, mengde);
 
             ArrayList<Node> løv = huffman(data); //Lager binærtre og koder ut fra det!
+
+            //Finne og skrive koder
+            int[] tegn = new int[løv.size()];
             String[] koder = new String[løv.size()];
             for(int i = 0; i < løv.size(); i++){
                 koder[i] = løv.get(i).kode;
+                tegn[i] = løv.get(i).tegn;
             }
             long[] longKoder = new long[koder.length];
             for(int i = 0; i < koder.length; i++){
                 longKoder[i] = Long.parseLong(koder[i]);
             }
+            long[] rekkefølge = new long[text.length()];
+            for(int i = 0; i < text.length(); i++){
+                long kode = 0;
+                for(int j = 0; j < longKoder.length; j++){
+                    if(text.charAt(i) == tegn[j]){
+                        kode = longKoder[j];
+                    }
+                }
+                rekkefølge[i] = kode;
+            }
 
-            int[] tegn = new int[løv.size()];
-            int[] antall = new int[løv.size()];
+            //Frekvens av 256 tegn (ASCII)
+            int[] antall = new int[256];
             for(int i = 0; i < løv.size(); i++){
-                tegn[i] = løv.get(i).tegn;
-                antall[i] = løv.get(i).verdi;
+                if(løv.get(i).tegn == i) {
+                    antall[i] = løv.get(i).verdi;
+                }
             }
 
-            int utLength = tegn.length + longKoder.length;
-            int utIndex = 0;
-            byte[] utData = new byte[utLength];
-            for(int i = 0; i < tegn.length; i++){
-                utData[utIndex] = (byte) longKoder[i];
+            //Skrive begge deler til samme byte-array
+            byte[] utData2 = new byte[antall.length];
+            for(int i = 0; i < antall.length; i++){
+                utData2[i++] = (byte) antall[i];
+                utData2[i] = (byte) ',';
             }
-            for(int i = 0; i < longKoder.length; i++){
-                utData[utIndex] = (byte) longKoder[i];
+
+            byte[] utData = new byte[rekkefølge.length];
+            for(int i = 0; i < rekkefølge.length; i++){
+                utData[i] = (byte) rekkefølge[i];
             }
 
             index = 0;
