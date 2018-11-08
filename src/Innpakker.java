@@ -77,13 +77,14 @@ public class Innpakker {
                 }
             }
 
-            //Skrive begge deler til samme byte-array
+            //Lage byte
             byte[] utData2 = new byte[antall.length];
             for(int i = 0; i < antall.length; i++){
                 utData2[i++] = (byte) antall[i];
                 utData2[i] = (byte) ',';
             }
 
+            //Skriv ut koder
             byte[] utData = new byte[rekkefølge.length];
             for(int i = 0; i < rekkefølge.length; i++){
                 utData[i] = (byte) rekkefølge[i];
