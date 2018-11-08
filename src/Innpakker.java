@@ -31,7 +31,19 @@ public class Innpakker {
 
             innfil.readFully(data, index, mengde);
 
-            ArrayList<Node> løv = huffman(data); //Lager binærtre og koder ut fra det!
+            //Gjør klar til huffman
+            ArrayList<Node> noder = new ArrayList<>();
+            for(int i = 0; i < data.length; i++){
+                Node n = new Node(data[i]);
+                if(!noder.contains(n)){
+                    noder.add(n);
+                }
+                else{
+                    noder.get(noder.indexOf(n)).verdi++;
+                }
+            }
+
+            ArrayList<Node> løv = huffman(noder); //Lager binærtre og koder ut fra det!
 
             //Finne og skrive koder
             int[] tegn = new int[løv.size()];
@@ -84,17 +96,7 @@ public class Innpakker {
         return false;
     }
 
-    private ArrayList<Node> huffman(byte[] data){
-        ArrayList<Node> noder = new ArrayList<>();
-        for(int i = 0; i < data.length; i++){
-            Node n = new Node(data[i]);
-            if(!noder.contains(n)){
-                noder.add(n);
-            }
-            else{
-                noder.get(noder.indexOf(n)).verdi++;
-            }
-        }
+    public ArrayList<Node> huffman(ArrayList<Node> noder){
         Collections.sort(noder);
         System.out.println("\n*NODER*");
         for(Node n : noder){
