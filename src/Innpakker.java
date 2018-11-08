@@ -9,7 +9,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/testfile", "src/utfil");
+        inn.innpakk("src/testfile", "src/komprimert.txt");
     }
 
     public Innpakker(){ }
@@ -22,7 +22,7 @@ public class Innpakker {
             BufferedReader br = new BufferedReader(new FileReader(filinn));
             Scanner scanner = new Scanner( new File(filinn) );
             DataInputStream innfil = new DataInputStream(new BufferedInputStream(new FileInputStream(filinn)));
-            DataOutputStream utfil = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filut)));
+            DataOutputStream komprimert = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filut)));
         ){
             String text = scanner.useDelimiter("\\A").next();
             mengde = text.length();
@@ -52,7 +52,7 @@ public class Innpakker {
             }
 
             index = 0;
-            utfil.write(utData, index, utData.length);
+            komprimert.write(utData, index, utData.length);
             return true;
         }catch (Exception e){
             e.printStackTrace();
