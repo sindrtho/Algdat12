@@ -35,7 +35,17 @@ public class Node implements Comparable<Node>{
 
     public int compareTo( Node node ){
         if(node == this) return 0;
-        if(node.verdi < this.verdi) return 1;
+        if(node.verdi < this.verdi){
+            return 1;
+        }else if(node.verdi == this.verdi){
+            if(node.tegn < 0 || this.tegn < 0){
+                return 0;
+            }else if(node.tegn < this.tegn){
+                return  1;
+            }else{
+                return -1;
+            }
+        }
         return -1;
     }
 

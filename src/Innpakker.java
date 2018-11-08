@@ -47,9 +47,13 @@ public class Innpakker {
                     noder.get(noder.indexOf(n)).verdi++;
                 }
             }
-
             //Lager binærtre og koder ut fra det!
             ArrayList<Node> noder2 = huffman(noder);
+            for(int b = 0; b < noder2.size(); b++){
+                if(noder2.get(b).kode != null) {
+                    System.out.println("tegn:" + noder2.get(b).tegn + ", verdi: " + noder2.get(b).verdi + ", kode: " + noder2.get(b).kode);
+                }
+            }
 
             //Legger løvnodene (de med koder) inn i en liste
             ArrayList<Node> løv = new ArrayList<>();

@@ -35,7 +35,15 @@ public class Utpakker {
                 }
             }
             br.close();
-            return innpakker.huffman(noder);
+
+            ArrayList<Node> tre =  innpakker.huffman(noder);
+            tre.sort(Node::compareTo);
+            for(int i = 0; i < tre.size(); i++){
+                if(tre.get(i).kode != null) {
+                    System.out.println("tegn:" + tre.get(i).tegn + ", verdi: " + tre.get(i).verdi + ", kode: " + tre.get(i).kode);
+                }
+            }
+            return tre;
 
         }catch (IOException e){
             e.printStackTrace();
@@ -82,15 +90,28 @@ public class Utpakker {
     }
 
     //Denne metoden tar bit for bit fra bitTabellen og går igjennom treet
-    public static String lesAvTre(ArrayList<Node> tre, String[] bitTabell){
-        String utText = "";
+    public ArrayList<Character> lesAvTre(ArrayList<Node> tre, String[] bitTabell){
+        ArrayList<Character> utText = new ArrayList<Character>();
 
+        //Finner root noden
+        Node root = tre.get(tre.size()-1); //litt festlig, compareTo metoden vår setter treet i feil rekkefølge, dermed er rota siste element i lista
+        Node neste = root; //Setter startnode som rootnoden altså vi starter på toppen av treet
+
+        //Går igjennom treet
         for(int i = 0; i < bitTabell.length; i++){
-            if(bitTabell[i].equals("0")){
-
+            if(neste.venstre == null || neste.høyre == null){ //Hvis noden er en løvnode
+                if(neste.tegn >= 0){
+                    utText.add((char) neste.tegn);
+                    neste = root;
+                    char a = (char) neste.tegn;
+                    System.out.println(a);
+                }
             }
-            else{
-
+            else if(bitTabell[i].equals("0")){
+                neste = neste.venstre;
+            }
+            else if(bitTabell[i].equals("1")){
+                neste = neste.høyre;
             }
         }
         return utText;
