@@ -83,10 +83,17 @@ public class Utpakker {
 
     //Denne metoden tar bit for bit fra bitTabellen og går igjennom treet
     public static String lesAvTre(ArrayList<Node> tre, String[] bitTabell){
+        String utText = "";
 
-        for(){
+        for(int i = 0; i < bitTabell.length; i++){
+            if(bitTabell[i].equals("0")){
 
+            }
+            else{
+
+            }
         }
+        return utText;
     }
 }
 
