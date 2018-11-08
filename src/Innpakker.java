@@ -9,7 +9,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/testfile", "src/komprimert.txt", "src/frekvens");
+        inn.innpakk("src/testfile.txt", "src/komprimert.txt", "src/frekvens.txt");
     }
 
     public Innpakker(){ }
@@ -30,6 +30,8 @@ public class Innpakker {
             data = new byte[mengde];
 
             innfil.readFully(data, index, mengde);
+
+            getFrequencies(data, filfrekvens);
 
             //Gjør klar til huffman
             ArrayList<Node> noder = new ArrayList<>();
@@ -196,5 +198,23 @@ public class Node implements Comparable<Node>{
     @Override
     public String toString(){
         return "tegn: " + this.tegn + ", ant: " + this.verdi + ", kode: " + this.kode;
+    }
+
+    public void getFrequencies(byte[] data, String file) {
+        int[] freqs = new int[256];
+        for(byte b : data)
+            freqs[b] ++;
+
+        try(
+                PrintWriter pr = new PrintWriter(new FileWriter(file));
+        ){
+            String res = "";
+            for(int i : freqs)
+                res += i+",";
+            res = res.substring(0, res.length()-1);
+            pr.write(res);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
