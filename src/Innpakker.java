@@ -9,7 +9,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/testfile.txt", "src/komprimert.txt", "src/frekvens.txt");
+        inn.innpakk("src/filer/opg12.txt", "src/komprimert.txt", "src/frekvens.txt");
     }
 
     public Innpakker(){ }
@@ -155,8 +155,13 @@ public class Innpakker {
 
     public void getFrequencies(byte[] data, String file) {
         int[] freqs = new int[256];
-        for(byte b : data)
-            freqs[b] ++;
+        for(byte b : data) {
+            System.out.println(b);
+            if(b >= 0)
+                freqs[b]++;
+            else
+                freqs[b*-1+127]++;
+        }
 
         try(
                 PrintWriter pr = new PrintWriter(new FileWriter(file));
