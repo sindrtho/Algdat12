@@ -56,7 +56,41 @@ public class Innpakker {
             for(int i = 0; i < løv.size(); i++){
                 koder[i] = løv.get(i).kode;
                 tegn[i] = løv.get(i).tegn;
+                System.out.println("kodekoder:" + koder[i]);
             }
+            //Komprimere bytes
+            boolean[] bits = new boolean[text.length()*8];
+            int bitIndex = 0;
+            for(int i = 0; i < text.length(); i++){
+                String kode = "";
+                for(int j = 0; j < tegn.length; j++){
+                    if(text.charAt(i) == tegn[j]){
+                        kode = koder[j];
+                    }
+                }
+                System.out.println("booleanKoder:" + kode);
+                for(int j = 0; j < kode.length(); j++){
+                    System.out.println("booleanKoder:" + kode.charAt(j));
+                    if(kode.charAt(j) == '0'){
+                        bits[bitIndex++] = false;
+                    }else{
+                        bits[bitIndex++] = true;
+                    }
+                }
+            }
+
+            byte[] toReturn = new byte[bits.length / 8];
+            for (int entry = 0; entry < toReturn.length; entry++) {
+                for (int bit = 0; bit < 8; bit++) {
+                    if (bits[entry * 8 + bit]) {
+                        toReturn[entry] |= (128 >> bit);
+                    }
+                }
+            }
+            for(byte b: toReturn){
+                System.out.println("Byte: " + b);
+            }
+
             //parse string til long
             long[] longKoder = new long[koder.length];
             for(int i = 0; i < koder.length; i++){
@@ -71,6 +105,7 @@ public class Innpakker {
                     }
                 }
                 rekkefølge[i] = kode;
+                //System.out.println("longkoder:" + kode);
             }
 
             //Skriv ut koder
