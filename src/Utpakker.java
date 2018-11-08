@@ -1,4 +1,4 @@
-package Øving12;
+package AlgDat12;
 
 public class Utpakker {
     public Utpakker(){ }

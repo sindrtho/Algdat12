@@ -1,4 +1,4 @@
-package Øving12;
+package AlgDat12;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ public class Innpakker {
     //Bruker Huffman
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
-        Utpakker ut = new Utpakker();
 
         inn.innpakk("Algoritmer og Datastrukturer/Øving12/testfile", "Algoritmer og Datastrukturer/Øving12/utfil");
     }
