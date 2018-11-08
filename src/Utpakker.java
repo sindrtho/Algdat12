@@ -7,19 +7,17 @@ public class Utpakker {
 
     public static void main(String[] args) {
         Utpakker ut = new Utpakker();
-        ut.utpakk("src/komprimert", "src/dekomprimert");
+        //ut.utpakk("src/komprimert", "src/dekomprimert");
+        System.out.println("Hallo");
     }
 
     public Utpakker() {
     }
 
     public static boolean utpakk(String filinn, String filut) {
-        int[] frekvens;
         byte[] data;
         int index = 0;
-        int index2 = 0;
         int mengde;
-        int mengde2;
 
         try (
                 BufferedReader br = new BufferedReader(new FileReader(filinn));
@@ -27,42 +25,20 @@ public class Utpakker {
                 DataInputStream innfil = new DataInputStream(new BufferedInputStream(new FileInputStream(filinn)));
                 DataOutputStream utfil = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filut)));
         ) {
-            //Leser inn Frekvenstabellen
+            //Leser inn ASCIItabellen
             String text = scanner.useDelimiter("\\A").next();
             mengde = text.length();
-            frekvens = new int[mengde];
-
-            //Leser inn ASCIItabellen
-            String text2 = scanner.useDelimiter("\\A").next();
-            mengde2 = text2.length();
-            data = new byte[mengde2];
+            data = new byte[mengde];
 
             innfil.readFully(data, index, mengde);
 
 
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 }
 
-public class Node implements Comparable<Node> {
-    public int tegn;
-    public int verdi = 1; //hvor mange
-    public String kode;
-
-    public Node forelder;
-    public Node venstre;
-    public Node høyre;
-
-    public Node(String kode) {
-        this.kode = kode;
-    }
-
-    public void finnTegn(int tegn) {
-        if (!this.kode.equals("") || this.kode != null) {
-
-        } else {
-
-        }
-    }
-}
 
