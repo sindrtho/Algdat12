@@ -1,7 +1,9 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Utpakker {
 
@@ -12,6 +14,25 @@ public class Utpakker {
     }
 
     public Utpakker() {
+    }
+
+    public void lesFrekvenstabell(String filnavnFrekvensTabell){
+        ArrayList<Innpakker.Node> noder = new ArrayList<Innpakker.Node>();
+        try {
+
+
+            BufferedReader br = new BufferedReader(new FileReader(filnavnFrekvensTabell));
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int bokstav = Integer.parseInt(st.nextToken().toString());
+            int frekvens = Integer.parseInt(st.nextToken().toString());
+            if (frekvens > 0) {
+
+
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 
     public static boolean utpakk(String filinn, String filut) {
