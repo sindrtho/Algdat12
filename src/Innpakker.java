@@ -77,7 +77,7 @@ public class Innpakker {
                 }
             }
 
-            //Lage byte
+            //Lage bytearray av frekvensen
             byte[] utData2 = new byte[antall.length];
             for(int i = 0; i < antall.length; i++){
                 utData2[i++] = (byte) antall[i];
@@ -151,53 +151,6 @@ public class Innpakker {
             System.out.println(n);
         }
         return løv;
-    }
-}
-
-public class Node implements Comparable<Node>{
-    public int tegn;
-    public int verdi = 1; //hvor mange
-    public String kode;
-
-    public Node forelder;
-    public Node venstre;
-    public Node høyre;
-
-    public Node(int tegn){
-        this.tegn = tegn;
-    }
-
-    public void finnKode(String kode){
-        if(this.tegn >= 0){
-            this.kode = kode;
-        }else{
-            if(venstre != null){
-                venstre.finnKode(kode + "0");
-            }
-            if(høyre != null){
-                høyre.finnKode(kode + "1");
-            }
-        }
-    }
-
-    @Override
-    public boolean equals(Object o){
-        if(o == this) return true;
-        if(!o.getClass().equals(this.getClass())) return false;
-        Node n = (Node) o;
-        if(n.tegn == this.tegn) return true;
-        return false;
-    }
-
-    public int compareTo( Node node ){
-        if(node == this) return 0;
-        if(node.verdi < this.verdi) return 1;
-        return -1;
-    }
-
-    @Override
-    public String toString(){
-        return "tegn: " + this.tegn + ", ant: " + this.verdi + ", kode: " + this.kode;
     }
 
     public void getFrequencies(byte[] data, String file) {
