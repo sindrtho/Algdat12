@@ -10,8 +10,8 @@ public class Utpakker {
 
     public static void main(String[] args) {
         Utpakker ut = new Utpakker();
-        //ut.utpakk("src/komprimert", "src/dekomprimert");
-        System.out.println("Hallo");
+        //ut.pakkut("src/komprimert", "src/dekomprimert");
+
     }
 
     public Utpakker() {
@@ -45,11 +45,11 @@ public class Utpakker {
 
     }
 
-    public static boolean utpakk(String filinn, String filut) {
+    public static boolean pakkut(String filinn, String filut) {
         byte[] data;
         int index = 0;
         int mengde;
-        String[] unicode;
+        String[] bitTabell;
         final int BITSPRBYTE = 8;
 
         try (
@@ -58,22 +58,21 @@ public class Utpakker {
                 DataInputStream innfil = new DataInputStream(new BufferedInputStream(new FileInputStream(filinn)));
                 DataOutputStream utfil = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filut)));
         ) {
-            //Leser inn ASCIItabellen
+            //Leser inn ASCIItabellen og gjør om til en bitstring og legger hver bit i hver sin tabellplass (bitTabell)
             String text = scanner.useDelimiter("\\A").next();
             mengde = text.length();
             data = new byte[mengde];
 
             innfil.readFully(data, index, mengde);
 
-            unicode = new String[data.length * BITSPRBYTE];
+            bitTabell = new String[data.length * BITSPRBYTE];
             int bitkode = 0;
             String bitstreng = "";
             for(int i = 0; i < data.length; i++){
-                bitkode = (int) data[i];
-                bitstreng += bitkode;
+                bitstreng += Integer.toString(data[i],2);
             }
             System.out.println(bitstreng);
-            unicode = bitstreng.split("");
+            bitTabell = bitstreng.split("");
 
 
 
