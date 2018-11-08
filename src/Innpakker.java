@@ -51,10 +51,6 @@ public class Innpakker {
             //Lager binærtre og koder ut fra det!
             ArrayList<Node> noder2 = huffman(noder);
 
-            //Finner root og bruker finnKode for å lage koder i løvnodene
-            Node root = noder2.get(noder2.size() - 1);
-            root.finnKode("");
-
             //Legger løvnodene (de med koder) inn i en liste
             ArrayList<Node> løv = new ArrayList<>();
             for(Node n : noder2){
@@ -182,6 +178,11 @@ public class Innpakker {
             }
         }
         Collections.sort(noder);
+
+        //Finner root og bruker finnKode for å lage koder i løvnodene
+        Node root = noder.get(noder.size() - 1);
+        root.finnKode("");
+
         return noder;
     }
 
