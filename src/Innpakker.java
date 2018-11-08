@@ -35,20 +35,26 @@ public class Innpakker {
             for(int i = 0; i < løv.size(); i++){
                 koder[i] = løv.get(i).kode;
             }
-            long[] temp = new long[koder.length];
+            long[] longKoder = new long[koder.length];
             for(int i = 0; i < koder.length; i++){
-                temp[i] = Long.parseLong(koder[i]);
+                longKoder[i] = Long.parseLong(koder[i]);
             }
 
             int[] tegn = new int[løv.size()];
+            int[] antall = new int[løv.size()];
             for(int i = 0; i < løv.size(); i++){
                 tegn[i] = løv.get(i).tegn;
+                antall[i] = løv.get(i).verdi;
             }
 
-            
-            byte[] utData = new byte[temp.length];
-            for(int i = 0; i < temp.length; i++){
-                utData[i] = (byte) temp[i];
+            int utLength = tegn.length + longKoder.length;
+            int utIndex = 0;
+            byte[] utData = new byte[utLength];
+            for(int i = 0; i < tegn.length; i++){
+                utData[utIndex] = (byte) longKoder[i];
+            }
+            for(int i = 0; i < longKoder.length; i++){
+                utData[utIndex] = (byte) longKoder[i];
             }
 
             index = 0;
@@ -82,11 +88,10 @@ public class Innpakker {
         int tegn = -1;
         while(ok){
             ArrayList<Node> nivå = new ArrayList<>();
-            for(int i = klone.size() - 1; i >= 0;){
+            for(int i = 0; i < klone.size(); i+=2){
                 Node forelder = new Node(tegn--);
                 if(i+1 > klone.size() - 1){ //kan ikke slå sammen 2 da det bare er 1
                     nivå.add(klone.get(i));
-                    i--;
                 }else{
                     forelder.verdi = klone.get(i).verdi + klone.get(i+1).verdi; //Legger sammen de 2 største
                     klone.get(i).forelder = forelder;
@@ -96,7 +101,6 @@ public class Innpakker {
 
                     nivå.add(forelder);
                     noder.add(forelder);
-                    i-=2;
                 }
             }
             klone = (ArrayList<Node>) nivå.clone();
@@ -111,7 +115,7 @@ public class Innpakker {
         }
         Collections.sort(noder);
 
-        Node root = noder.get(0);
+        Node root = noder.get(noder.size() - 1);
         root.finnKode("");
 
         ArrayList<Node> løv = new ArrayList<>();
@@ -163,7 +167,7 @@ public class Innpakker {
 
         public int compareTo( Node node ){
             if(node == this) return 0;
-            if(node.verdi > this.verdi) return 1;
+            if(node.verdi < this.verdi) return 1;
             return -1;
         }
 
