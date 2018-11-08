@@ -85,21 +85,22 @@ public class Innpakker {
         int tegn = -1;
         while(ok){
             ArrayList<Node> nivå = new ArrayList<>();
-            for(int i = klone.size() - 1; i >= 0; i-=2){
+            for(int i = klone.size() - 1; i >= 0;){
                 Node forelder = new Node(tegn--);
-                if(i+1 > klone.size() - 1){
-                    forelder.verdi = klone.get(i).verdi;
-                    klone.get(i).forelder = forelder;
-                    forelder.venstre = klone.get(i);
+                if(i+1 > klone.size() - 1){ //kan ikke slå sammen 2 da det bare er 1
+                    nivå.add(klone.get(i));
+                    i--;
                 }else{
                     forelder.verdi = klone.get(i).verdi + klone.get(i+1).verdi; //Legger sammen de 2 største
                     klone.get(i).forelder = forelder;
                     klone.get(i+1).forelder = forelder;
                     forelder.venstre = klone.get(i);
                     forelder.høyre = klone.get(i+1);
+
+                    nivå.add(forelder);
+                    noder.add(forelder);
+                    i-=2;
                 }
-                nivå.add(forelder);
-                noder.add(forelder);
             }
             klone = (ArrayList<Node>) nivå.clone();
 
