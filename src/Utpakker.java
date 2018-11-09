@@ -1,11 +1,7 @@
 
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class Utpakker {
     private int antallTegn = 0;
@@ -63,35 +59,33 @@ public class Utpakker {
         BufferedWriter bufferedWriter;
         try {
             fileInputStream = new FileInputStream(filinn);
-            bufferedWriter = new BufferedWriter(new FileWriter("filut"));
+            bufferedWriter = new BufferedWriter(new FileWriter(filut));
 
-            byte[] byteTabell = new byte[antallTegn];
+            byte[] byteTabell = new byte[(int) new File(filinn).length()];
 
+
+
+            //fileInputStream.read(byteTabell): leser ut bytes og stapper de inn i byteTabell:
             fileInputStream.read(byteTabell);
             System.out.println("skriver ut bytsene");
             String komprimert = "";
             for(int i  = 0; i < byteTabell.length; i++ ){
-                if(byteTabell[i] == 0){
-                    //filtrere bort indekser uten tegn
-                }else if(byteTabell[i] < 0){
-                    int  b = byteTabell[i] + 256;
-                    String temp = "" + Integer.toString(b, 2);
-                    temp = new StringBuffer(temp).reverse().toString();
-                    for (int g = temp.length(); g <8; g++ ){
-                        temp += "0";
-                    }
-                    komprimert += temp;
-                    System.out.println(temp);
+                int b = 0;
+                if(byteTabell[i] < 0){
+                    b = byteTabell[i] + 256;
                 }else{
-                    int b = byteTabell[i];
-                    String temp = "" + Integer.toString(b, 2);
-                    temp = new StringBuffer(temp).reverse().toString();
-                    for (int g = temp.length(); g <8; g++ ){
-                        temp += "0";
-                    }
-                    komprimert += temp;
-                    System.out.println(temp);
+                    b = byteTabell[i];
                 }
+
+                String temp = "" + Integer.toString(b, 2);
+                temp = new StringBuffer(temp).reverse().toString();
+                for (int g = temp.length(); g <8; g++ ){
+                    temp += "0";
+                }
+                komprimert += temp;
+                System.out.println(temp);
+
+
             }
             System.out.println(komprimert);
             ArrayList<Character> resultat = lesAvTre(tre , komprimert);
@@ -113,9 +107,17 @@ public class Utpakker {
         System.out.println("rotnode verdi: " + root.verdi + ", antall tegn: " + antallTegn);
         Node neste = root; //Setter startnode som rootnoden altså vi starter på toppen av treet
         int teller = 0;
+        System.out.println("bitTabell.length():" + bitTabell.length());
 
         //Går igjennom treet
-        for(int i = 0; i < bitTabell.length(); i++){
+        for(int i = 0; i < bitTabell.length() +1 ; i++){
+            //System.out.println("teller: " + teller + ", antall tegn:" + antallTegn+ ", i: " + i);
+
+            if(teller > antallTegn+1){
+                System.out.println("teller: " + teller + ", antall tegn:" + antallTegn);
+                break;
+            }
+
             if(neste.venstre == null || neste.høyre == null){ //Hvis noden er en løvnode
                 if(neste.tegn >= 0){
                     utText.add((char) neste.tegn);
@@ -125,15 +127,14 @@ public class Utpakker {
                     teller++;
                 }
             }
-            if(bitTabell.charAt(i) == '0'){
-                neste = neste.venstre;
+            if(i < bitTabell.length()) {
+                if (bitTabell.charAt(i) == '0') {
+                    neste = neste.venstre;
+                } else if (bitTabell.charAt(i) == '1') {
+                    neste = neste.høyre;
+                }
             }
-            else if(bitTabell.charAt(i) == '1'){
-                neste = neste.høyre;
-            }
-            if(teller == antallTegn){
-                break;
-            }
+
         }
         return utText;
     }

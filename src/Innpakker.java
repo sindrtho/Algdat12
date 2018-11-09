@@ -50,8 +50,10 @@ public class Innpakker {
             ArrayList<Node> noder2 = huffman(noder);
             System.out.println("\nNoder2: " + noder2.size());
             for(int b = 0; b < noder2.size(); b++){
-                if(noder2.get(b).kode != null) {
-                    System.out.println("tegn:" + noder2.get(b).tegn + ", verdi: " + noder2.get(b).verdi + ", kode: " + noder2.get(b).kode);
+                if(noder2.get(b).kode != null ) {
+                    if(!noder2.get(b).kode.equals("null")) {
+                        System.out.println("tegn:" + (char) noder2.get(b).tegn + ", verdi: " + noder2.get(b).verdi + ", kode: " + noder2.get(b).kode);
+                    }
                 }
             }
 
@@ -67,7 +69,7 @@ public class Innpakker {
             for(int i = 0; i < løv.size(); i++){
                 koder[i] = løv.get(i).kode;
                 tegn[i] = løv.get(i).tegn;
-                System.out.println("kodekoder:" + koder[i]);
+                //System.out.println("kodekoder:" + koder[i]);
             }
 
             //Komprimere bytes
@@ -83,7 +85,7 @@ public class Innpakker {
                 }
                 //System.out.println("booleanKoder:" + kode);
                 for(int j = 0; j < kode.length(); j++){
-                    System.out.println("bKoder:" + kode.charAt(j));
+                    //System.out.println("bKoder:" + kode.charAt(j));
                     if(kode.charAt(j) == '0'){
                         bits[bitIndex++] = false;
                     }else{
@@ -99,14 +101,14 @@ public class Innpakker {
                 }
             }
             for(int i = 0; i < set.length(); i++){
-                System.out.println("Bit: " + set.get(i));
+                //System.out.println("Bit: " + set.get(i));
             }
 
             byte[] myBytes = set.toByteArray();
             for(byte b: myBytes){
                 String res = "Byte: ";
                 res += b < 0 ? new StringBuffer("" + Integer.toString((b+256), 2)).reverse().toString() : new StringBuffer("" + Integer.toString(b, 2)).reverse().toString();
-                System.out.println(res);
+                //System.out.println(res);
             }
 
             //Skriv ut koder
@@ -153,7 +155,7 @@ public class Innpakker {
 
         System.out.println("\n*NODER*");
         for(Node n : noder){
-            System.out.println(n);
+            //System.out.println(n);
         }
 
         //Finner root og bruker finnKode for å lage koder i løvnodene
