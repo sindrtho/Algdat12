@@ -63,7 +63,7 @@ public class Utpakker {
         BufferedWriter bufferedWriter;
         try {
             fileInputStream = new FileInputStream(filinn);
-            bufferedWriter = new BufferedWriter(new FileWriter("filut"));
+            bufferedWriter = new BufferedWriter(new FileWriter("filut.txt"));
 
             byte[] byteTabell = new byte[antallTegn];
 
