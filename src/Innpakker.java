@@ -103,6 +103,7 @@ public class Innpakker {
 
             //Skriv ut koder
             byte[] utData = myBytes;
+            System.out.println("Bytes: " + utData.length);
             index = 0;
             komprimert.write(utData, index, utData.length);
             return true;
