@@ -1,3 +1,5 @@
+
+
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -6,10 +8,12 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Utpakker {
+    private int antallTegn = 0;
 
     public static void main(String[] args) {
         Utpakker ut = new Utpakker();
-        //ut.pakkut("src/komprimert", "src/dekomprimert");
+        //ut.pakkut("src/komprimert", );
+        ut.pakkut("src/komprimert.txt", "src/dekomprimert.txt", "src/frekvens.txt");
 
     }
 
@@ -31,6 +35,7 @@ public class Utpakker {
                 if(verdi > 0){
                     Node node = new Node(i);
                     node.verdi = verdi;
+                    antallTegn += verdi;
                     noder.add(node);
                 }
             }
@@ -52,66 +57,82 @@ public class Utpakker {
 
     }
 
-    public static boolean pakkut(String filinn, String filut) {
-        byte[] data;
-        int index = 0;
-        int mengde;
-        String[] bitTabell;
-        final int BITSPRBYTE = 8;
+    public void pakkut(String filinn, String filut, String frekvensfil) {
+        ArrayList<Node> tre = lesFrekvenstabell(frekvensfil);
+        FileInputStream fileInputStream;
+        BufferedWriter bufferedWriter;
+        try {
+            fileInputStream = new FileInputStream(filinn);
+            bufferedWriter = new BufferedWriter(new FileWriter("filut"));
 
-        try (
-                BufferedReader br = new BufferedReader(new FileReader(filinn));
-                Scanner scanner = new Scanner(new File(filinn));
-                DataInputStream innfil = new DataInputStream(new BufferedInputStream(new FileInputStream(filinn)));
-                DataOutputStream utfil = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filut)));
-        ) {
-            //Leser inn ASCIItabellen og gjør om til en bitstring og legger hver bit i hver sin tabellplass (bitTabell)
-            String text = scanner.useDelimiter("\\A").next();
-            mengde = text.length();
-            data = new byte[mengde];
+            byte[] byteTabell = new byte[antallTegn];
 
-            innfil.readFully(data, index, mengde);
-
-            bitTabell = new String[data.length * BITSPRBYTE];
-            int bitkode = 0;
-            String bitstreng = "";
-            for(int i = 0; i < data.length; i++){
-                bitstreng += Integer.toString(data[i],2);
+            fileInputStream.read(byteTabell);
+            System.out.println("skriver ut bytsene");
+            String komprimert = "";
+            for(int i  = 0; i < byteTabell.length; i++ ){
+                if(byteTabell[i] == 0){
+                    //filtrere bort indekser uten tegn
+                }else if(byteTabell[i] < 0){
+                    int  b = byteTabell[i] + 256;
+                    String temp = "" + Integer.toString(b, 2);
+                    temp = new StringBuffer(temp).reverse().toString();
+                    for (int g = temp.length(); g <8; g++ ){
+                        temp += "0";
+                    }
+                    komprimert += temp;
+                    System.out.println(temp);
+                }else{
+                    int b = byteTabell[i];
+                    String temp = "" + Integer.toString(b, 2);
+                    temp = new StringBuffer(temp).reverse().toString();
+                    for (int g = temp.length(); g <8; g++ ){
+                        temp += "0";
+                    }
+                    komprimert += temp;
+                    System.out.println(temp);
+                }
             }
-            System.out.println(bitstreng);
-            bitTabell = bitstreng.split("");
+            System.out.println(komprimert);
+            ArrayList<Character> resultat = lesAvTre(tre , komprimert);
 
 
 
-        } catch (IOException e) {
+        }catch (IOException e){
             e.printStackTrace();
         }
-        return false;
+
     }
 
     //Denne metoden tar bit for bit fra bitTabellen og går igjennom treet
-    public ArrayList<Character> lesAvTre(ArrayList<Node> tre, String[] bitTabell){
+    public ArrayList<Character> lesAvTre(ArrayList<Node> tre, String bitTabell){
         ArrayList<Character> utText = new ArrayList<Character>();
 
         //Finner root noden
         Node root = tre.get(tre.size()-1); //litt festlig, compareTo metoden vår setter treet i feil rekkefølge, dermed er rota siste element i lista
+        System.out.println("rotnode verdi: " + root.verdi + ", antall tegn: " + antallTegn);
         Node neste = root; //Setter startnode som rootnoden altså vi starter på toppen av treet
+        int teller = 0;
 
         //Går igjennom treet
-        for(int i = 0; i < bitTabell.length; i++){
+        for(int i = 0; i < bitTabell.length(); i++){
             if(neste.venstre == null || neste.høyre == null){ //Hvis noden er en løvnode
                 if(neste.tegn >= 0){
                     utText.add((char) neste.tegn);
-                    neste = root;
                     char a = (char) neste.tegn;
-                    System.out.println(a);
+                    System.out.print(a);
+                    neste = root;
+                    teller++;
                 }
             }
-            else if(bitTabell[i].equals("0")){
+            if(bitTabell.charAt(i) == '0'){
                 neste = neste.venstre;
             }
-            else if(bitTabell[i].equals("1")){
+            else if(bitTabell.charAt(i) == '1'){
                 neste = neste.høyre;
+            }
+            if(teller == antallTegn){
+                break;
             }
         }
         return utText;

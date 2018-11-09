@@ -10,7 +10,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/testfile.txt", "src/komprimert.txt", "src/frekvens.txt");
+        inn.innpakk("src/filer/opg12.txt", "src/komprimert.txt", "src/frekvens.txt");
     }
 
     public Innpakker(){ }
@@ -71,7 +71,7 @@ public class Innpakker {
             }
 
             //Komprimere bytes
-            boolean[] bits = new boolean[text.length()*4];
+            boolean[] bits = new boolean[text.length()*16];
             int bitIndex = 0;
             for(int i = 0; i < text.length(); i++){
                 String kode = "";
