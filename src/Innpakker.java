@@ -20,7 +20,6 @@ public class Innpakker {
         int index = 0;
         int mengde;
         try(
-            BufferedReader br = new BufferedReader(new FileReader(filinn));
             Scanner scanner = new Scanner( new File(filinn) );
             DataInputStream innfil = new DataInputStream(new BufferedInputStream(new FileInputStream(filinn)));
             DataOutputStream komprimert = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filut)));
@@ -49,6 +48,7 @@ public class Innpakker {
             }
             //Lager binærtre og koder ut fra det!
             ArrayList<Node> noder2 = huffman(noder);
+            System.out.println("\nNoder2: " + noder2.size());
             for(int b = 0; b < noder2.size(); b++){
                 if(noder2.get(b).kode != null) {
                     System.out.println("tegn:" + noder2.get(b).tegn + ", verdi: " + noder2.get(b).verdi + ", kode: " + noder2.get(b).kode);
@@ -129,38 +129,32 @@ public class Innpakker {
         }*/
 
         //Lager binærtre
-        boolean ok = true;
         ArrayList<Node> klone = (ArrayList<Node>) noder.clone();
         int tegn = -1;
-        while(ok){
-            ArrayList<Node> nivå = new ArrayList<>();
-            for(int i = 0; i < klone.size(); i+=2){
-                Node forelder = new Node(tegn--);
-                if(i+1 > klone.size() - 1){ //kan ikke slå sammen 2 da det bare er 1
-                    nivå.add(klone.get(i));
-                }else{
-                    forelder.verdi = klone.get(i).verdi + klone.get(i+1).verdi; //Legger sammen de 2 største
-                    klone.get(i).forelder = forelder;
-                    klone.get(i+1).forelder = forelder;
-                    forelder.venstre = klone.get(i);
-                    forelder.høyre = klone.get(i+1);
+        while(klone.size() > 1){
+            Node forelder = new Node(Integer.MAX_VALUE);
 
-                    nivå.add(forelder);
-                    noder.add(forelder);
-                }
-            }
-            klone = (ArrayList<Node>) nivå.clone();
+            Node a = klone.get(0);
+            klone.remove(0);
+            Node b = klone.get(0);
+            klone.remove(0);
 
-            /*
-            System.out.println("\n*NYTT NIVÅ*");
-            for(Node n : klone){
-                System.out.println(n);
-            }*/
-            if(klone.size() <= 1){
-                ok = false;
-            }
+            forelder.verdi = a.verdi + b.verdi; //Legger sammen de 2 minste
+            a.forelder = forelder;
+            b.forelder = forelder;
+            forelder.venstre = a;
+            forelder.høyre = b;
+
+            klone.add(forelder);
+            noder.add(forelder);
+            Collections.sort(klone);
         }
         Collections.sort(noder);
+
+        System.out.println("\n*NODER*");
+        for(Node n : noder){
+            System.out.println(n);
+        }
 
         //Finner root og bruker finnKode for å lage koder i løvnodene
         Node root = noder.get(noder.size() - 1);

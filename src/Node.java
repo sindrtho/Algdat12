@@ -12,7 +12,7 @@ public class Node implements Comparable<Node>{
     }
 
     public void finnKode(String kode){
-        if(this.tegn >= 0){
+        if(this.tegn != Integer.MAX_VALUE){
             this.kode = kode;
         }else{
             if(venstre != null){
