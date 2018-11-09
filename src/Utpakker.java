@@ -96,6 +96,8 @@ public class Utpakker {
             System.out.println(komprimert);
             ArrayList<Character> resultat = lesAvTre(tre , komprimert);
 
+
+
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -108,7 +110,9 @@ public class Utpakker {
 
         //Finner root noden
         Node root = tre.get(tre.size()-1); //litt festlig, compareTo metoden vår setter treet i feil rekkefølge, dermed er rota siste element i lista
+        System.out.println("rotnode verdi: " + root.verdi + ", antall tegn: " + antallTegn);
         Node neste = root; //Setter startnode som rootnoden altså vi starter på toppen av treet
+        int teller = 0;
 
         //Går igjennom treet
         for(int i = 0; i < bitTabell.length(); i++){
@@ -118,13 +122,17 @@ public class Utpakker {
                     char a = (char) neste.tegn;
                     System.out.print(a);
                     neste = root;
+                    teller++;
                 }
             }
-            else if(bitTabell.charAt(i) == '0'){
+            if(bitTabell.charAt(i) == '0'){
                 neste = neste.venstre;
             }
             else if(bitTabell.charAt(i) == '1'){
                 neste = neste.høyre;
+            }
+            if(teller == antallTegn){
+                break;
             }
         }
         return utText;

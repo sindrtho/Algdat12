@@ -10,7 +10,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/testfile.txt", "src/komprimert.txt", "src/frekvens.txt");
+        inn.innpakk("src/filer/opg12.txt", "src/komprimert.txt", "src/frekvens.txt");
     }
 
     public Innpakker(){ }
