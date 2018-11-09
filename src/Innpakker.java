@@ -177,7 +177,7 @@ public class Innpakker {
             if(b >= 0)
                 freqs[b]++;
             else
-                freqs[b*-1+127]++;
+                freqs[b+256]++;
         }
 
         try(
