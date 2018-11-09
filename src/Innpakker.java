@@ -71,7 +71,7 @@ public class Innpakker {
             }
 
             //Komprimere bytes
-            boolean[] bits = new boolean[text.length()*4];
+            boolean[] bits = new boolean[text.length()*16];
             int bitIndex = 0;
             for(int i = 0; i < text.length(); i++){
                 String kode = "";
