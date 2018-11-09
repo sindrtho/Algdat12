@@ -11,6 +11,12 @@ public class Node implements Comparable<Node>{
         this.tegn = tegn;
     }
 
+    /* Finner koder på løvnoder ved å gå fra rotnoden
+     * 1. Sjekker om noden ikke er løvnode ved at vi sjekker denne nodens tegn. Foreldrenoder (ikke løvnoder) har tegn = integer.MAX
+     * 2. Hvis denne noden ikke er foreldrenode, finn kode på venstre og høyre (om de ikke er null)
+     * 3. Når vi finner kode for venstre og høyre, legger vi til 0 eller 1 i koden, for å si hvilken path vi tok :)
+     * 1.2 Hvis noden er løvnode, set koden til kode. Koden er sammensatt av 0 og 1.
+     */
     public void finnKode(String kode){
         if(this.tegn != Integer.MAX_VALUE){
             this.kode = kode;

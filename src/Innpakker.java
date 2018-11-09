@@ -128,9 +128,19 @@ public class Innpakker {
             System.out.println(n);
         }*/
 
-        //Lager binærtre
+        /* Lager binærtre!
+         * Lager en klone-tabell som vi kan legge til nye noder og ta ut noder vi allerede har vært hos.
+         * Går så lenge klone har flere elementer enn 1 (når den har 1, er det rotnoden).
+         * 1. Lager forelder med tegn=max int verdi
+         * 2. Tar ut 2 noder. Listen er sortert slik at de 2 øverste nodene er de minste.
+         * 3. Setter foreldrens verdi til summen av barnenodene
+         * 4. Setter barnenodenes forelder til forelderen
+         * 5. Setter forelderens høyre og venstre til barnenodene
+         * 6. Legger til forelder i klone-lista, slik at vi kan lage foreldrenode til den og (hvis det trengs).
+         * 7. Legger til forelder i noder-lista, da vi trenger hele treet i node-lista når vi skal finne rotnode (kanskje ikke nødvendig)
+         * 8. Sorterer klone-lista da vi trenger å ha de minste nodene (av alle) øverst for neste runde av while-løkke.
+         */
         ArrayList<Node> klone = (ArrayList<Node>) noder.clone();
-        int tegn = -1;
         while(klone.size() > 1){
             Node forelder = new Node(Integer.MAX_VALUE);
 
