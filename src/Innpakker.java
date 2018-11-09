@@ -163,6 +163,10 @@ public class Innpakker {
         return noder;
     }
 
+    /*
+    Tar inn en byte tabel og returnerer en int tabell med lengde 256 hvor verdien i hver index er frekvensen en bokstav
+    med ascii-verdi lik indexen dukker opp i teksten.
+     */
     public void getFrequencies(byte[] data, String file) {
         int[] freqs = new int[256];
         for(byte b : data) {
