@@ -175,8 +175,10 @@ public class Innpakker {
             //System.out.println(b);
             if(b >= 0)
                 freqs[b]++;
-            else
-                freqs[b+256]++;
+            else {
+                freqs[b + 256]++;
+                System.out.println((char)(b+256));
+            }
         }
 
         try(
