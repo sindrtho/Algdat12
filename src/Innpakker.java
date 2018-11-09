@@ -10,7 +10,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/filer/opg12.txt", "src/komprimert.txt", "src/frekvens.txt");
+        inn.innpakk("src/testfile.txt", "src/komprimert.txt", "src/frekvens.txt");
     }
 
     public Innpakker(){ }
@@ -38,6 +38,7 @@ public class Innpakker {
             //Gjør klar til huffman
             ArrayList<Node> noder = new ArrayList<>();
             for(int i = 0; i < data.length; i++){
+                //System.out.println(data[i]);
                 Node n = new Node(data[i]);
                 if(!noder.contains(n)){
                     noder.add(n);
