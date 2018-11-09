@@ -38,7 +38,6 @@ public class Innpakker {
             //Gjør klar til huffman
             ArrayList<Node> noder = new ArrayList<>();
             for(int i = 0; i < data.length; i++){
-                //System.out.println(data[i]);
                 Node n = new Node(data[i]);
                 if(!noder.contains(n)){
                     noder.add(n);
@@ -57,7 +56,7 @@ public class Innpakker {
                 if(n.kode != null) løv.add(n);
             }
             for(Node n : løv){
-                System.out.println("tegn:" + n.tegn + ", verdi: " + n.verdi + ", kode: " + n.kode);
+                System.out.println("tegn:" + n.tegn + (char) n.tegn  + ", verdi: " + n.verdi + ", kode: " + n.kode);
             }
 
             //Skrive koder til tegn i riktig rekkefølge
