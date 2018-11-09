@@ -10,7 +10,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/filer/opg12.txt", "src/komprimert.txt", "src/frekvens.txt");
+        inn.innpakk("src/testfile.txt", "src/komprimert.txt", "src/frekvens.txt");
     }
 
     public Innpakker(){ }
@@ -38,6 +38,7 @@ public class Innpakker {
             //Gjør klar til huffman
             ArrayList<Node> noder = new ArrayList<>();
             for(int i = 0; i < data.length; i++){
+                //System.out.println(data[i]);
                 Node n = new Node(data[i]);
                 if(!noder.contains(n)){
                     noder.add(n);
@@ -48,19 +49,15 @@ public class Innpakker {
             }
             //Lager binærtre og koder ut fra det!
             ArrayList<Node> noder2 = huffman(noder);
-            System.out.println("\nNoder2: " + noder2.size());
-            for(int b = 0; b < noder2.size(); b++){
-                if(noder2.get(b).kode != null ) {
-                    if(!noder2.get(b).kode.equals("null")) {
-                        System.out.println("tegn:" + (char) noder2.get(b).tegn + ", verdi: " + noder2.get(b).verdi + ", kode: " + noder2.get(b).kode);
-                    }
-                }
-            }
+
 
             //Legger løvnodene (de med koder) inn i en liste
             ArrayList<Node> løv = new ArrayList<>();
             for(Node n : noder2){
                 if(n.kode != null) løv.add(n);
+            }
+            for(Node n : løv){
+                System.out.println("tegn:" + n.tegn + ", verdi: " + n.verdi + ", kode: " + n.kode);
             }
 
             //Skrive koder til tegn i riktig rekkefølge
@@ -69,7 +66,7 @@ public class Innpakker {
             for(int i = 0; i < løv.size(); i++){
                 koder[i] = løv.get(i).kode;
                 tegn[i] = løv.get(i).tegn;
-                //System.out.println("kodekoder:" + koder[i]);
+
             }
 
             //Komprimere bytes
@@ -85,7 +82,7 @@ public class Innpakker {
                 }
                 //System.out.println("booleanKoder:" + kode);
                 for(int j = 0; j < kode.length(); j++){
-                    //System.out.println("bKoder:" + kode.charAt(j));
+
                     if(kode.charAt(j) == '0'){
                         bits[bitIndex++] = false;
                     }else{
@@ -100,9 +97,7 @@ public class Innpakker {
                     set.set(i);
                 }
             }
-            for(int i = 0; i < set.length(); i++){
-                //System.out.println("Bit: " + set.get(i));
-            }
+
 
             byte[] myBytes = set.toByteArray();
             for(byte b: myBytes){
@@ -113,6 +108,7 @@ public class Innpakker {
 
             //Skriv ut koder
             byte[] utData = myBytes;
+            System.out.println("Bytes: " + utData.length);
             index = 0;
             komprimert.write(utData, index, utData.length);
             return true;
@@ -130,9 +126,19 @@ public class Innpakker {
             System.out.println(n);
         }*/
 
-        //Lager binærtre
+        /* Lager binærtre!
+         * Lager en klone-tabell som vi kan legge til nye noder og ta ut noder vi allerede har vært hos.
+         * Går så lenge klone har flere elementer enn 1 (når den har 1, er det rotnoden).
+         * 1. Lager forelder med tegn=max int verdi
+         * 2. Tar ut 2 noder. Listen er sortert slik at de 2 øverste nodene er de minste.
+         * 3. Setter foreldrens verdi til summen av barnenodene
+         * 4. Setter barnenodenes forelder til forelderen
+         * 5. Setter forelderens høyre og venstre til barnenodene
+         * 6. Legger til forelder i klone-lista, slik at vi kan lage foreldrenode til den og (hvis det trengs).
+         * 7. Legger til forelder i noder-lista, da vi trenger hele treet i node-lista når vi skal finne rotnode (kanskje ikke nødvendig)
+         * 8. Sorterer klone-lista da vi trenger å ha de minste nodene (av alle) øverst for neste runde av while-løkke.
+         */
         ArrayList<Node> klone = (ArrayList<Node>) noder.clone();
-        int tegn = -1;
         while(klone.size() > 1){
             Node forelder = new Node(Integer.MAX_VALUE);
 
@@ -153,11 +159,6 @@ public class Innpakker {
         }
         Collections.sort(noder);
 
-        System.out.println("\n*NODER*");
-        for(Node n : noder){
-            //System.out.println(n);
-        }
-
         //Finner root og bruker finnKode for å lage koder i løvnodene
         Node root = noder.get(noder.size() - 1);
         root.finnKode("");
@@ -165,10 +166,14 @@ public class Innpakker {
         return noder;
     }
 
+    /*
+    Tar inn en byte tabel og returnerer en int tabell med lengde 256 hvor verdien i hver index er frekvensen en bokstav
+    med ascii-verdi lik indexen dukker opp i teksten.
+     */
     public void getFrequencies(byte[] data, String file) {
         int[] freqs = new int[256];
         for(byte b : data) {
-            System.out.println(b);
+            //System.out.println(b);
             if(b >= 0)
                 freqs[b]++;
             else
