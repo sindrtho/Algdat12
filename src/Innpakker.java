@@ -48,17 +48,14 @@ public class Innpakker {
             }
             //Lager binærtre og koder ut fra det!
             ArrayList<Node> noder2 = huffman(noder);
-            System.out.println("\nNoder2: " + noder2.size());
-            for(int b = 0; b < noder2.size(); b++){
-                if(noder2.get(b).kode != null) {
-                    System.out.println("tegn:" + noder2.get(b).tegn + ", verdi: " + noder2.get(b).verdi + ", kode: " + noder2.get(b).kode);
-                }
-            }
 
             //Legger løvnodene (de med koder) inn i en liste
             ArrayList<Node> løv = new ArrayList<>();
             for(Node n : noder2){
                 if(n.kode != null) løv.add(n);
+            }
+            for(Node n : løv){
+                System.out.println("tegn:" + n.tegn + ", verdi: " + n.verdi + ", kode: " + n.kode);
             }
 
             //Skrive koder til tegn i riktig rekkefølge
@@ -67,7 +64,6 @@ public class Innpakker {
             for(int i = 0; i < løv.size(); i++){
                 koder[i] = løv.get(i).kode;
                 tegn[i] = løv.get(i).tegn;
-                System.out.println("kodekoder:" + koder[i]);
             }
 
             //Komprimere bytes
@@ -83,7 +79,6 @@ public class Innpakker {
                 }
                 //System.out.println("booleanKoder:" + kode);
                 for(int j = 0; j < kode.length(); j++){
-                    System.out.println("bKoder:" + kode.charAt(j));
                     if(kode.charAt(j) == '0'){
                         bits[bitIndex++] = false;
                     }else{
@@ -97,9 +92,6 @@ public class Innpakker {
                 if (bits[i]) {
                     set.set(i);
                 }
-            }
-            for(int i = 0; i < set.length(); i++){
-                System.out.println("Bit: " + set.get(i));
             }
 
             byte[] myBytes = set.toByteArray();
@@ -161,11 +153,6 @@ public class Innpakker {
         }
         Collections.sort(noder);
 
-        System.out.println("\n*NODER*");
-        for(Node n : noder){
-            System.out.println(n);
-        }
-
         //Finner root og bruker finnKode for å lage koder i løvnodene
         Node root = noder.get(noder.size() - 1);
         root.finnKode("");
@@ -180,7 +167,7 @@ public class Innpakker {
     public void getFrequencies(byte[] data, String file) {
         int[] freqs = new int[256];
         for(byte b : data) {
-            System.out.println(b);
+            //System.out.println(b);
             if(b >= 0)
                 freqs[b]++;
             else
