@@ -10,7 +10,7 @@ public class Innpakker {
     public static void main(String[] args){
         Innpakker inn = new Innpakker();
 
-        inn.innpakk("src/testfile.txt", "src/komprimert.txt", "src/frekvens.txt");
+        inn.innpakk("src/filer/opg12.txt", "src/komprimert.txt", "src/frekvens.txt");
     }
 
     public Innpakker(){ }
@@ -39,6 +39,8 @@ public class Innpakker {
             ArrayList<Node> noder = new ArrayList<>();
             for(int i = 0; i < data.length; i++){
                 Node n = new Node(data[i]);
+                if(data[i] < 0)
+                    n = new Node(data[i] & 0xFF);
                 if(!noder.contains(n)){
                     noder.add(n);
                 }
@@ -46,6 +48,7 @@ public class Innpakker {
                     noder.get(noder.indexOf(n)).verdi++;
                 }
             }
+            noder.sort(Node::compareTo);
             //Lager binærtre og koder ut fra det!
             ArrayList<Node> noder2 = huffman(noder);
 
@@ -56,7 +59,7 @@ public class Innpakker {
                 if(n.kode != null) løv.add(n);
             }
             for(Node n : løv){
-                System.out.println("tegn:" + n.tegn + (char) n.tegn  + ", verdi: " + n.verdi + ", kode: " + n.kode);
+                System.out.println("tegn:" + n.tegn + ", som char: "+ (char) n.tegn  + ", verdi: " + n.verdi + ", kode: " + n.kode);
             }
 
             //Skrive koder til tegn i riktig rekkefølge
