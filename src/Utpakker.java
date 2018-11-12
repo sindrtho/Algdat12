@@ -48,6 +48,7 @@ public class Utpakker {
                     System.out.println("tegn:" + n.tegn + ", som char: "+ (char) n.tegn  + ", verdi: " + n.verdi + ", kode: " + n.kode);
                 }
             }
+
             return tre;
 
         }catch (IOException e){
