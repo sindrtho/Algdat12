@@ -55,9 +55,9 @@ public class Innpakker {
             for(Node n : noder2){
                 if(n.kode != null) løv.add(n);
             }
-            for(Node n : løv){
-                System.out.println("tegn:" + n.tegn + (char) n.tegn  + ", verdi: " + n.verdi + ", kode: " + n.kode);
-            }
+//            for(Node n : løv){
+//                System.out.println("tegn:" + n.tegn + (char) n.tegn  + ", verdi: " + n.verdi + ", kode: " + n.kode);
+//            }
 
             //Skrive koder til tegn i riktig rekkefølge
             int[] tegn = new int[løv.size()];
@@ -99,15 +99,15 @@ public class Innpakker {
 
 
             byte[] myBytes = set.toByteArray();
-            for(byte b: myBytes){
-                String res = "Byte: ";
-                res += b < 0 ? new StringBuffer("" + Integer.toString((b+256), 2)).reverse().toString() : new StringBuffer("" + Integer.toString(b, 2)).reverse().toString();
+//            for(byte b: myBytes){
+//                String res = "Byte: ";
+//                res += b < 0 ? new StringBuffer("" + Integer.toString((b+256), 2)).reverse().toString() : new StringBuffer("" + Integer.toString(b, 2)).reverse().toString();
                 //System.out.println(res);
-            }
+//            }
 
             //Skriv ut koder
             byte[] utData = myBytes;
-            System.out.println("Bytes: " + utData.length);
+//            System.out.println("Bytes: " + utData.length);
             index = 0;
             komprimert.write(utData, index, utData.length);
             return true;
@@ -176,8 +176,8 @@ public class Innpakker {
             if(b >= 0)
                 freqs[b]++;
             else {
-                freqs[b + 256]++;
-                System.out.println((char)(b+256));
+                freqs[b & 0xFF]++;
+//                System.out.println((char)(b+256));
             }
         }
 

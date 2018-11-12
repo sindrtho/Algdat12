@@ -44,11 +44,11 @@ public class Utpakker {
 
             //en liten system.out.println for så se nodene:
             tre.sort(Node::compareTo);
-            for(int i = 0; i < tre.size(); i++){
-                if(tre.get(i).kode != null) {
-                    System.out.println("tegn:" + tre.get(i).tegn + (char) tre.get(i).tegn  +", verdi: " + tre.get(i).verdi + ", kode: " + tre.get(i).kode);
-                }
-            }
+//            for(int i = 0; i < tre.size(); i++){
+//                if(tre.get(i).kode != null) {
+//                    System.out.println("tegn:" + tre.get(i).tegn + (char) tre.get(i).tegn  +", verdi: " + tre.get(i).verdi + ", kode: " + tre.get(i).kode);
+//                }
+//            }
             return tre;
 
         }catch (IOException e){
@@ -79,7 +79,7 @@ public class Utpakker {
             //fileInputStream.read(byteTabell): leser ut bytes og stapper de inn i byteTabell:
             fileInputStream.read(byteTabell);
 
-            System.out.println("skriver ut bytsene");
+//            System.out.println("skriver ut bytsene");
 
             //string komprimert er alle bytesene som er kombinert til en lang string
             String komprimert = "";
@@ -87,7 +87,7 @@ public class Utpakker {
                 int b = 0;
                 if(byteTabell[i] < 0){
                     //plusse på 256 for å ta høyde for negative bytes:
-                    b = byteTabell[i] + 256;
+                    b = byteTabell[i] & 0xFF;
                 }else{
                     b = byteTabell[i];
                 }
@@ -105,12 +105,12 @@ public class Utpakker {
 
                 //legger den ene bytes strengen til hovedstrengen:
                 komprimert += temp;
-                System.out.println(temp);
+//                System.out.println(temp);
 
 
             }
 
-            System.out.println(komprimert);
+//            System.out.println(komprimert);
 
             //metodekall: resultat er string-teksten som skal skrives ut til fil:
             String resultat = lesAvTre(tre , komprimert);
@@ -132,10 +132,10 @@ public class Utpakker {
 
         //Finner root noden
         Node root = tre.get(tre.size()-1); //litt festlig, compareTo metoden vår setter treet i feil rekkefølge, dermed er rota siste element i lista
-        System.out.println("rotnode verdi: " + root.verdi + ", antall tegn: " + antallTegn);
+//        System.out.println("rotnode verdi: " + root.verdi + ", antall tegn: " + antallTegn);
         Node neste = root; //Setter startnode som rootnoden altså vi starter på toppen av treet
         int teller = 0; //skal sørge for at vi ikke leser flere bits enn vi har tegn.
-        System.out.println("bitTabell.length():" + bitTabell.length());
+//        System.out.println("bitTabell.length():" + bitTabell.length());
 
         //Går igjennom bitmønstrene og sammenligner med treet vårt:
         //for hver 1 eller 0 i bitmønsteret vurderer den hvor den skal gå i treet.
@@ -144,7 +144,7 @@ public class Utpakker {
             //System.out.println("teller: " + teller + ", antall tegn:" + antallTegn+ ", i: " + i);
 
             if(teller > antallTegn+1){
-                System.out.println("teller: " + teller + ", antall tegn:" + antallTegn);
+//                System.out.println("teller: " + teller + ", antall tegn:" + antallTegn);
                 break;
             }
 
